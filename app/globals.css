@@ -1,0 +1,153 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  /* Light theme (opt-in via the toggle) */
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 233 29% 14%;
+    --card: 0 0% 100%;
+    --card-foreground: 233 29% 14%;
+    --primary: 259 84% 60%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 220 20% 96%;
+    --secondary-foreground: 233 29% 14%;
+    --muted: 220 20% 96%;
+    --muted-foreground: 240 8% 42%;
+    --accent: 190 90% 45%;
+    --accent-foreground: 0 0% 100%;
+    --destructive: 0 72% 51%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 220 20% 89%;
+    --input: 220 20% 89%;
+    --ring: 259 84% 60%;
+    --radius: 1rem;
+
+    /* Gradient stops shared by text, borders and blobs */
+    --grad-1: 259 84% 63%;
+    --grad-2: 291 80% 64%;
+    --grad-3: 190 90% 52%;
+  }
+
+  /* Dark theme — the default for this site */
+  .dark {
+    --background: 240 24% 6%;
+    --foreground: 220 30% 96%;
+    --card: 240 20% 9%;
+    --card-foreground: 220 30% 96%;
+    --primary: 259 90% 68%;
+    --primary-foreground: 240 24% 6%;
+    --secondary: 240 16% 14%;
+    --secondary-foreground: 220 30% 96%;
+    --muted: 240 16% 14%;
+    --muted-foreground: 232 14% 66%;
+    --accent: 190 95% 58%;
+    --accent-foreground: 240 24% 6%;
+    --destructive: 0 72% 58%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 240 14% 20%;
+    --input: 240 14% 20%;
+    --ring: 259 90% 68%;
+
+    --grad-1: 259 90% 70%;
+    --grad-2: 291 85% 70%;
+    --grad-3: 190 95% 60%;
+  }
+
+  * {
+    @apply border-border;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    /* Keeps section headings clear of the floating navbar when jumping to an anchor */
+    scroll-padding-top: 6rem;
+  }
+
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
+  }
+
+  /* Respect users who ask for reduced motion: kill decorative loops. */
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}
+
+@layer components {
+  /* Animated gradient text used for the hero name and section accents. */
+  .gradient-text {
+    @apply bg-clip-text text-transparent;
+    background-image: linear-gradient(
+      100deg,
+      hsl(var(--grad-1)),
+      hsl(var(--grad-2)),
+      hsl(var(--grad-3)),
+      hsl(var(--grad-1))
+    );
+    background-size: 300% 100%;
+    @apply animate-gradient-pan;
+  }
+
+  /* Frosted translucent surface — the glassmorphism base for every card. */
+  .glass {
+    @apply rounded-[var(--radius)] border border-white/10 bg-white/60 shadow-xl backdrop-blur-xl;
+  }
+  .dark .glass {
+    @apply border-white/10 bg-white/[0.04] shadow-2xl shadow-black/40;
+  }
+
+  /*
+   * Gradient border: a gradient-filled wrapper whose inner element paints the
+   * card background, leaving a 1px gradient rim. Cheaper than border-image and
+   * keeps the rounded corners crisp.
+   */
+  .gradient-border {
+    position: relative;
+    isolation: isolate;
+  }
+  .gradient-border::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 1px;
+    background: linear-gradient(
+      135deg,
+      hsl(var(--grad-1) / 0.7),
+      hsl(var(--grad-3) / 0.35) 45%,
+      transparent 75%
+    );
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+    z-index: -1;
+  }
+}
+
+/* Subtle custom scrollbar that matches the dark palette. */
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: hsl(var(--background));
+}
+::-webkit-scrollbar-thumb {
+  background: hsl(var(--border));
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: hsl(var(--primary) / 0.6);
+}
