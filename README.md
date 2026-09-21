@@ -50,7 +50,7 @@ components/
   sections/             # Hero, About, Skills, Experience, Projects,
                         # Achievements, Education, Contact, Footer
   ui/                   # NavBar, ThemeToggle, cards, shadcn primitives
-  shared/               # Typewriter, Counter, SectionHeading, BackToTop, Loader
+  shared/               # Typewriter, Counter, SectionHeading, BackToTop
 data/                   # all resume content (edit here, not in components)
 lib/                    # cn() helper, motion variants, contact schema
 ```

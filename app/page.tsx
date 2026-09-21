@@ -5,10 +5,10 @@ import { Education } from '@/components/sections/Education'
 import { Experience } from '@/components/sections/Experience'
 import { Footer } from '@/components/sections/Footer'
 import { Hero } from '@/components/sections/Hero'
+import { Marquee } from '@/components/sections/Marquee'
 import { Projects } from '@/components/sections/Projects'
 import { Skills } from '@/components/sections/Skills'
 import { BackToTop } from '@/components/shared/BackToTop'
-import { Loader } from '@/components/shared/Loader'
 import { NavBar } from '@/components/ui/NavBar'
 
 /*
@@ -21,11 +21,11 @@ import { NavBar } from '@/components/ui/NavBar'
 export default function HomePage() {
   return (
     <>
-      <Loader />
       <NavBar />
 
-      <main>
+      <main id="main">
         <Hero />
+        <Marquee />
         <About />
         <Skills />
         <Experience />

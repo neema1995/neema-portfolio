@@ -5,8 +5,9 @@ import { useTheme } from 'next-themes'
 import { useEffect, useState } from 'react'
 
 /**
- * Dark/light switch. Renders a neutral placeholder until mounted so the
- * server and client markup match (next-themes resolves the theme on the client).
+ * Standard icon theme switch. Renders a fixed-size placeholder until mounted so
+ * the server and client markup match (next-themes resolves on the client) and
+ * the header does not shift.
  */
 export function ThemeToggle() {
   const { resolvedTheme, setTheme } = useTheme()
@@ -21,12 +22,16 @@ export function ThemeToggle() {
       type="button"
       aria-label={mounted ? `Switch to ${isDark ? 'light' : 'dark'} theme` : 'Toggle theme'}
       onClick={() => setTheme(isDark ? 'light' : 'dark')}
-      className="flex h-9 w-9 items-center justify-center rounded-full border border-border text-muted-foreground transition-colors hover:border-primary/50 hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+      className="flex h-10 w-10 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
     >
-      {mounted && !isDark ? (
-        <Moon className="h-4 w-4" />
+      {mounted ? (
+        isDark ? (
+          <Sun className="h-[18px] w-[18px]" />
+        ) : (
+          <Moon className="h-[18px] w-[18px]" />
+        )
       ) : (
-        <Sun className="h-4 w-4" />
+        <span className="h-[18px] w-[18px]" />
       )}
     </button>
   )

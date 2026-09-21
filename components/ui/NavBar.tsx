@@ -1,19 +1,21 @@
 'use client'
 
-import { motion } from 'framer-motion'
+import { AnimatePresence, motion } from 'framer-motion'
 import { Menu, X } from 'lucide-react'
 import { useEffect, useState } from 'react'
+import { buttonVariants } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
-import { navLinks } from '@/data/personal'
+import { navLinks, personal } from '@/data/personal'
 import { ThemeToggle } from './ThemeToggle'
 
 /**
- * Floating pill navigation.
- * Tracks the section currently in view and highlights the matching link.
+ * Sticky site header.
+ * Tracks the section currently in view and marks the matching link.
  */
 export function NavBar() {
   const [active, setActive] = useState<string>(navLinks[0].id)
   const [open, setOpen] = useState(false)
+  const [scrolled, setScrolled] = useState(false)
 
   useEffect(() => {
     const sections = navLinks
@@ -38,82 +40,62 @@ export function NavBar() {
     return () => observer.disconnect()
   }, [])
 
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 16)
+    onScroll()
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [])
+
+  // Lock page scroll while the mobile menu is open.
+  useEffect(() => {
+    document.body.style.overflow = open ? 'hidden' : ''
+    return () => {
+      document.body.style.overflow = ''
+    }
+  }, [open])
+
+  // Initials shown in the wordmark badge.
+  const initials = personal.name
+    .split(' ')
+    .slice(0, 2)
+    .map((part) => part[0])
+    .join('')
+
   return (
-    <motion.header
-      initial={{ y: -80, opacity: 0 }}
-      animate={{ y: 0, opacity: 1 }}
-      transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1], delay: 1.4 }}
-      className="fixed inset-x-0 top-4 z-50 px-4"
+    <header
+      className={cn(
+        'sticky top-0 z-50 border-b transition-colors duration-200',
+        scrolled || open
+          ? 'border-border bg-background/80 backdrop-blur-md'
+          : 'border-transparent bg-background'
+      )}
     >
       <nav
         aria-label="Primary"
-        className="glass gradient-border mx-auto flex max-w-4xl items-center justify-between gap-4 !rounded-full px-4 py-2.5 sm:px-6"
+        className="container-page flex h-16 items-center justify-between gap-4"
       >
-        <a
-          href="#home"
-          className="gradient-text font-display text-base font-bold tracking-tight"
-        >
-          Neema
+        <a href="#home" className="flex items-center gap-2.5 rounded-lg font-semibold tracking-tight">
+          <span
+            aria-hidden="true"
+            className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary text-sm font-bold text-primary-foreground"
+          >
+            {initials}
+          </span>
+          <span className="hidden sm:inline">{personal.name.split(' ')[0]}</span>
         </a>
 
         {/* Desktop links */}
         <ul className="hidden items-center gap-1 lg:flex">
-          {navLinks.map((link) => (
+          {navLinks.slice(1).map((link) => (
             <li key={link.id}>
               <a
                 href={`#${link.id}`}
                 aria-current={active === link.id ? 'true' : undefined}
                 className={cn(
-                  'relative rounded-full px-3 py-1.5 text-sm transition-colors',
+                  'rounded-lg px-3 py-2 text-sm font-medium transition-colors',
                   active === link.id
-                    ? 'text-primary-foreground'
-                    : 'text-muted-foreground hover:text-foreground'
-                )}
-              >
-                {/* Shared layout pill slides between the active items */}
-                {active === link.id && (
-                  <motion.span
-                    layoutId="nav-pill"
-                    transition={{ type: 'spring', stiffness: 380, damping: 30 }}
-                    className="absolute inset-0 -z-10 rounded-full bg-[linear-gradient(100deg,hsl(var(--grad-1)),hsl(var(--grad-3)))]"
-                  />
-                )}
-                {link.label}
-              </a>
-            </li>
-          ))}
-        </ul>
-
-        <div className="flex items-center gap-2">
-          <ThemeToggle />
-          <button
-            type="button"
-            aria-label="Toggle navigation menu"
-            aria-expanded={open}
-            onClick={() => setOpen((v) => !v)}
-            className="flex h-9 w-9 items-center justify-center rounded-full border border-border text-muted-foreground transition-colors hover:border-primary/50 hover:text-primary lg:hidden"
-          >
-            {open ? <X className="h-4 w-4" /> : <Menu className="h-4 w-4" />}
-          </button>
-        </div>
-      </nav>
-
-      {/* Mobile dropdown */}
-      {open && (
-        <motion.ul
-          initial={{ opacity: 0, y: -8 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="glass gradient-border mx-auto mt-2 grid max-w-4xl grid-cols-2 gap-1 p-3 lg:hidden"
-        >
-          {navLinks.map((link) => (
-            <li key={link.id}>
-              <a
-                href={`#${link.id}`}
-                onClick={() => setOpen(false)}
-                className={cn(
-                  'block rounded-xl px-3 py-2 text-sm transition-colors',
-                  active === link.id
-                    ? 'bg-primary/15 text-primary'
+                    ? 'bg-muted text-foreground'
                     : 'text-muted-foreground hover:bg-muted hover:text-foreground'
                 )}
               >
@@ -121,8 +103,59 @@ export function NavBar() {
               </a>
             </li>
           ))}
-        </motion.ul>
-      )}
-    </motion.header>
+        </ul>
+
+        <div className="flex items-center gap-1">
+          <ThemeToggle />
+          <a
+            href="#contact"
+            className={cn(buttonVariants({ size: 'sm' }), 'ml-1 hidden sm:inline-flex')}
+          >
+            Get in touch
+          </a>
+          <button
+            type="button"
+            aria-label={open ? 'Close navigation menu' : 'Open navigation menu'}
+            aria-expanded={open}
+            onClick={() => setOpen((v) => !v)}
+            className="flex h-10 w-10 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:bg-muted hover:text-foreground lg:hidden"
+          >
+            {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+          </button>
+        </div>
+      </nav>
+
+      {/* Mobile menu */}
+      <AnimatePresence>
+        {open && (
+          <motion.div
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: 'auto' }}
+            exit={{ opacity: 0, height: 0 }}
+            transition={{ duration: 0.2 }}
+            className="overflow-hidden border-t border-border bg-background lg:hidden"
+          >
+            <ul className="container-page flex flex-col py-3">
+              {navLinks.map((link) => (
+                <li key={link.id}>
+                  <a
+                    href={`#${link.id}`}
+                    onClick={() => setOpen(false)}
+                    className={cn(
+                      'block rounded-lg px-3 py-2.5 text-base font-medium transition-colors',
+                      active === link.id
+                        ? 'bg-muted text-foreground'
+                        : 'text-muted-foreground hover:bg-muted hover:text-foreground'
+                    )}
+                  >
+                    {link.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </header>
   )
 }

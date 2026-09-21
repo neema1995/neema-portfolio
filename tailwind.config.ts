@@ -15,12 +15,11 @@ const config: Config = {
     container: {
       center: true,
       padding: '1.5rem',
-      screens: { '2xl': '1200px' },
+      screens: { '2xl': '1152px' },
     },
     extend: {
       fontFamily: {
-        sans: ['var(--font-inter)', 'system-ui', 'sans-serif'],
-        display: ['var(--font-space-grotesk)', 'var(--font-inter)', 'sans-serif'],
+        sans: ['var(--font-dm-sans)', 'system-ui', 'sans-serif'],
       },
       colors: {
         border: 'hsl(var(--border))',
@@ -28,9 +27,14 @@ const config: Config = {
         ring: 'hsl(var(--ring))',
         background: 'hsl(var(--background))',
         foreground: 'hsl(var(--foreground))',
+        /* Very light neutral used to alternate section backgrounds. */
+        subtle: 'hsl(var(--subtle))',
+        success: 'hsl(var(--success))',
         primary: {
           DEFAULT: 'hsl(var(--primary))',
           foreground: 'hsl(var(--primary-foreground))',
+          /* Tinted fill behind icons and active chips. */
+          soft: 'hsl(var(--primary-soft))',
         },
         secondary: {
           DEFAULT: 'hsl(var(--secondary))',
@@ -54,23 +58,21 @@ const config: Config = {
         },
       },
       borderRadius: {
+        xl: 'calc(var(--radius) + 4px)',
         lg: 'var(--radius)',
-        md: 'calc(var(--radius) - 2px)',
-        sm: 'calc(var(--radius) - 4px)',
+        md: 'calc(var(--radius) - 4px)',
+        sm: 'calc(var(--radius) - 6px)',
+      },
+      /* Three elevation steps — anything deeper reads as a modal, not a card. */
+      boxShadow: {
+        sm: '0 1px 2px 0 rgb(15 23 42 / 0.05)',
+        card: '0 1px 3px 0 rgb(15 23 42 / 0.06), 0 1px 2px -1px rgb(15 23 42 / 0.04)',
+        'card-hover': '0 10px 24px -6px rgb(15 23 42 / 0.12), 0 4px 8px -4px rgb(15 23 42 / 0.06)',
       },
       keyframes: {
-        'gradient-pan': {
-          '0%, 100%': { backgroundPosition: '0% 50%' },
-          '50%': { backgroundPosition: '100% 50%' },
-        },
-        blob: {
-          '0%, 100%': { transform: 'translate(0, 0) scale(1)' },
-          '33%': { transform: 'translate(40px, -60px) scale(1.12)' },
-          '66%': { transform: 'translate(-30px, 30px) scale(0.92)' },
-        },
-        float: {
-          '0%, 100%': { transform: 'translateY(0)' },
-          '50%': { transform: 'translateY(-10px)' },
+        marquee: {
+          from: { transform: 'translateX(0)' },
+          to: { transform: 'translateX(-50%)' },
         },
         caret: {
           '0%, 100%': { opacity: '1' },
@@ -78,9 +80,7 @@ const config: Config = {
         },
       },
       animation: {
-        'gradient-pan': 'gradient-pan 6s ease infinite',
-        blob: 'blob 14s ease-in-out infinite',
-        float: 'float 4s ease-in-out infinite',
+        marquee: 'marquee 45s linear infinite',
         caret: 'caret 1s step-end infinite',
       },
     },

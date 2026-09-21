@@ -2,27 +2,32 @@ import * as React from 'react'
 import { cva, type VariantProps } from 'class-variance-authority'
 import { cn } from '@/lib/utils'
 
-/** shadcn/ui button, extended with a `gradient` variant for the CTAs. */
+/**
+ * shadcn/ui button.
+ *
+ * Variants map to intent, not to looks: `primary` for the single main action
+ * in a view, `outline` for supporting actions, `ghost` for low-emphasis icon
+ * buttons, `secondary` for neutral filled actions.
+ */
 const buttonVariants = cva(
-  'inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-full text-sm font-medium transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background disabled:pointer-events-none disabled:opacity-50',
+  'group inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-lg font-medium transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background disabled:pointer-events-none disabled:opacity-60',
   {
     variants: {
       variant: {
-        gradient:
-          'bg-[linear-gradient(100deg,hsl(var(--grad-1)),hsl(var(--grad-2)),hsl(var(--grad-3)))] bg-[length:200%_100%] text-white shadow-lg shadow-primary/25 hover:bg-[position:100%_0] hover:shadow-xl hover:shadow-primary/35',
+        primary: 'bg-primary text-primary-foreground shadow-sm hover:bg-primary/90 active:bg-primary/95',
         outline:
-          'border border-border bg-transparent hover:border-primary/60 hover:bg-primary/10',
-        ghost: 'hover:bg-muted',
-        secondary: 'bg-secondary text-secondary-foreground hover:bg-muted',
+          'border border-border bg-background text-foreground shadow-sm hover:border-primary/40 hover:bg-muted active:bg-muted',
+        ghost: 'text-muted-foreground hover:bg-muted hover:text-foreground',
+        secondary: 'bg-secondary text-secondary-foreground hover:bg-secondary/80',
       },
       size: {
-        sm: 'h-9 px-4',
-        md: 'h-11 px-6',
-        lg: 'h-12 px-8 text-base',
+        sm: 'h-9 px-3.5 text-sm',
+        md: 'h-10 px-5 text-sm',
+        lg: 'h-12 px-6 text-base',
         icon: 'h-10 w-10',
       },
     },
-    defaultVariants: { variant: 'gradient', size: 'md' },
+    defaultVariants: { variant: 'primary', size: 'md' },
   }
 )
 

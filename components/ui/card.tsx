@@ -2,18 +2,23 @@ import * as React from 'react'
 import { cn } from '@/lib/utils'
 
 /**
- * Glassmorphism card used across every bento grid.
- * Combines the `.glass` surface with the `.gradient-border` rim.
+ * Standard elevated surface: rounded corners, hairline border, soft shadow.
+ * Pass `interactive` for the lift-on-hover treatment used by linked cards.
  */
-const Card = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(
-  ({ className, ...props }, ref) => (
-    <div
-      ref={ref}
-      className={cn('glass gradient-border p-6 transition-colors', className)}
-      {...props}
-    />
-  )
-)
+const Card = React.forwardRef<
+  HTMLDivElement,
+  React.HTMLAttributes<HTMLDivElement> & { interactive?: boolean }
+>(({ className, interactive = false, ...props }, ref) => (
+  <div
+    ref={ref}
+    className={cn(
+      'rounded-xl border border-border bg-card p-6 shadow-card transition-all duration-200',
+      interactive && 'hover:-translate-y-1 hover:border-primary/30 hover:shadow-card-hover',
+      className
+    )}
+    {...props}
+  />
+))
 Card.displayName = 'Card'
 
 const CardTitle = React.forwardRef<
@@ -22,7 +27,7 @@ const CardTitle = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <h3
     ref={ref}
-    className={cn('font-display text-lg font-semibold tracking-tight', className)}
+    className={cn('text-lg font-semibold tracking-tight', className)}
     {...props}
   />
 ))

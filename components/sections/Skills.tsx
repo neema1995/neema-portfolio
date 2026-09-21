@@ -1,60 +1,53 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { Card, CardTitle } from '@/components/ui/card'
 import { SkillCard } from '@/components/ui/SkillCard'
 import { SectionHeading } from '@/components/shared/SectionHeading'
+import { Badge } from '@/components/ui/badge'
 import { skillCategories, skillTags } from '@/data/skills'
 import { fadeInUp, staggerContainer, viewportOnce } from '@/lib/motion'
 
 export function Skills() {
   return (
-    <section id="skills" aria-labelledby="skills-heading" className="px-6 py-24">
-      <div className="mx-auto max-w-6xl">
-        <div id="skills-heading">
-          <SectionHeading
-            eyebrow="Skills"
-            title="Technical toolkit"
-            subtitle="Frameworks, databases and tooling I work with day to day."
-          />
-        </div>
+    <section id="skills" aria-labelledby="skills-heading" className="section bg-subtle">
+      <div className="container-page">
+        <SectionHeading
+          id="skills-heading"
+          eyebrow="Skills"
+          title="Technical toolkit"
+          subtitle="Frameworks, databases and tooling I work with day to day."
+        />
 
-        {/* Bento grid of categorized skill cards */}
-        <motion.div
+        <motion.ul
           variants={staggerContainer}
           initial="hidden"
           whileInView="visible"
           viewport={viewportOnce}
-          className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4"
+          className="grid items-start gap-6 sm:grid-cols-2"
         >
           {skillCategories.map((category) => (
             <SkillCard key={category.title} category={category} />
           ))}
-        </motion.div>
+        </motion.ul>
 
-        {/* Full technology tag cloud */}
+        {/* Full technology list */}
         <motion.div
-          variants={staggerContainer}
+          variants={fadeInUp}
           initial="hidden"
           whileInView="visible"
           viewport={viewportOnce}
-          className="mt-5"
+          className="mt-10 text-center"
         >
-          <motion.div variants={fadeInUp}>
-            <Card>
-              <CardTitle className="mb-4">Technologies</CardTitle>
-              <ul className="flex flex-wrap gap-2.5">
-                {skillTags.map((tag) => (
-                  <li
-                    key={tag}
-                    className="cursor-default rounded-full border border-primary/20 bg-primary/5 px-4 py-1.5 text-sm font-medium text-foreground transition-all hover:-translate-y-0.5 hover:border-primary/50 hover:bg-primary/10 hover:text-primary"
-                  >
-                    {tag}
-                  </li>
-                ))}
-              </ul>
-            </Card>
-          </motion.div>
+          <h3 className="text-sm font-semibold text-foreground">Also familiar with</h3>
+          <ul className="mt-4 flex flex-wrap justify-center gap-2">
+            {skillTags.map((tag) => (
+              <li key={tag}>
+                <Badge variant="outline" className="bg-background px-3 py-1.5 text-sm">
+                  {tag}
+                </Badge>
+              </li>
+            ))}
+          </ul>
         </motion.div>
       </div>
     </section>

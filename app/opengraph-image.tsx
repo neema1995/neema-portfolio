@@ -21,22 +21,23 @@ export default function OpenGraphImage() {
           flexDirection: 'column',
           justifyContent: 'center',
           padding: '80px',
-          background: 'linear-gradient(135deg, #0c0c14 0%, #171433 55%, #0d2a33 100%)',
-          color: 'white',
+          background: '#ffffff',
+          color: '#0f172a',
           fontFamily: 'sans-serif',
         }}
       >
-        <div style={{ fontSize: 28, letterSpacing: 6, color: '#9b8cff', textTransform: 'uppercase' }}>
-          Portfolio
-        </div>
-        <div style={{ fontSize: 86, fontWeight: 700, marginTop: 20, lineHeight: 1.05 }}>
+        {/* Brand bar, matching the blue primary token. */}
+        <div style={{ display: 'flex', width: 96, height: 8, background: '#2563eb', borderRadius: 4 }} />
+        <div style={{ fontSize: 96, fontWeight: 700, marginTop: 32, lineHeight: 1.05, letterSpacing: -3 }}>
           {personal.name}
         </div>
-        <div style={{ fontSize: 40, marginTop: 16, color: '#5ad9f0' }}>{personal.role}</div>
-        <div style={{ fontSize: 26, marginTop: 28, color: '#a6a9bd' }}>
+        <div style={{ fontSize: 40, marginTop: 16, color: '#2563eb', fontWeight: 600 }}>
+          {personal.role}
+        </div>
+        <div style={{ fontSize: 28, marginTop: 28, color: '#334155' }}>
           Laravel · PHP · MySQL · Vue.js · REST APIs
         </div>
-        <div style={{ fontSize: 24, marginTop: 14, color: '#7c7f94' }}>{personal.location}</div>
+        <div style={{ fontSize: 24, marginTop: 12, color: '#64748b' }}>{personal.location}</div>
       </div>
     ),
     size

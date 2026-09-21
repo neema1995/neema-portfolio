@@ -16,13 +16,7 @@ export const personal = {
   /** Primary role, as printed on the resume */
   role: 'Software Engineer',
   /** Rotating titles for the hero typewriter — all derived from the resume */
-  roles: [
-    'Software Engineer',
-    'Laravel Developer',
-    'Backend Engineer',
-    'REST API Developer',
-    'Vue.js Developer',
-  ],
+  roles: ['Software Engineer', 'Backend Engineer'],
   dateOfBirth: '18 / 11 / 1995',
   email: 'nsav1995@gmail.com',
   phone: '+91 9497051348',
@@ -55,6 +49,51 @@ export const socials: SocialLink[] = [
   { label: 'Email', href: `mailto:${personal.email}`, icon: 'mail' },
   { label: 'Phone', href: `tel:${personal.phone.replace(/\s/g, '')}`, icon: 'phone' },
   // TODO: Add GitHub link once a username is available.
+]
+
+/**
+ * Backend specialities, listed as chips under the hero intro so the reader
+ * can scan them instead of parsing a long sentence.
+ */
+export const specialities: string[] = [
+  'Advanced Eloquent modelling',
+  'Complex query optimisation',
+  'Redis caching strategies',
+  'Queue-driven processing',
+  'Domain-driven structure',
+]
+
+/**
+ * What I actually spend my time on, shown as cards under the hero.
+ * Each entry paraphrases a bullet already present in data/experience.ts —
+ * nothing here is invented.
+ */
+export type FocusArea = {
+  title: string
+  description: string
+  /** Lucide icon name resolved in components/sections/Hero.tsx */
+  icon: 'api' | 'report' | 'layers'
+}
+
+export const focusAreas: FocusArea[] = [
+  {
+    title: 'REST APIs',
+    description:
+      'Laravel APIs that back iOS and Android apps — versioned endpoints, predictable payloads.',
+    icon: 'api',
+  },
+  {
+    title: 'Automated reporting',
+    description:
+      'Cron-driven productivity reports that mail performance summaries and activity logs to admins.',
+    icon: 'report',
+  },
+  {
+    title: 'Service layers',
+    description:
+      'Reusable service classes for users, tasks and time tracking that cut duplication across the codebase.',
+    icon: 'layers',
+  },
 ]
 
 /** Navigation entries. Section ids must match the <section id="..."> in page.tsx */

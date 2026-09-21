@@ -3,9 +3,9 @@
 import { motion } from 'framer-motion'
 import { AlertCircle, CheckCircle2, Linkedin, Loader2, Mail, MapPin, Phone, Send } from 'lucide-react'
 import { useState, type FormEvent } from 'react'
-import { Card, CardTitle } from '@/components/ui/card'
-import { Button } from '@/components/ui/button'
 import { SectionHeading } from '@/components/shared/SectionHeading'
+import { Button } from '@/components/ui/button'
+import { Card } from '@/components/ui/card'
 import { contactSchema, type ContactFieldErrors, type ContactInput } from '@/lib/contact-schema'
 import { personal } from '@/data/personal'
 import { cn } from '@/lib/utils'
@@ -76,67 +76,70 @@ export function Contact() {
   ] as const
 
   const details = [
-    { Icon: Mail, label: 'Email', value: personal.email, href: `mailto:${personal.email}`, external: false },
-    { Icon: Phone, label: 'Phone', value: personal.phone, href: `tel:${personal.phone.replace(/\s/g, '')}`, external: false },
-    { Icon: Linkedin, label: 'LinkedIn', value: 'View profile', href: personal.linkedin, external: true },
-    { Icon: MapPin, label: 'Location', value: personal.address, href: null, external: false },
+    { icon: Mail, label: 'Email', value: personal.email, href: `mailto:${personal.email}`, external: false },
+    { icon: Phone, label: 'Phone', value: personal.phone, href: `tel:${personal.phone.replace(/\s/g, '')}`, external: false },
+    { icon: Linkedin, label: 'LinkedIn', value: 'View profile', href: personal.linkedin, external: true },
+    { icon: MapPin, label: 'Location', value: personal.address, href: null, external: false },
   ]
 
   return (
-    <section id="contact" aria-labelledby="contact-heading" className="px-6 py-24">
-      <div className="mx-auto max-w-6xl">
-        <div id="contact-heading">
-          <SectionHeading
-            eyebrow="Contact"
-            title="Let's work together"
-            subtitle="Have a project or a role in mind? Send a message and I'll get back to you."
-          />
-        </div>
+    <section id="contact" aria-labelledby="contact-heading" className="section">
+      <div className="container-page">
+        <SectionHeading
+          id="contact-heading"
+          eyebrow="Contact"
+          title="Let's work together"
+          subtitle="Have a project or a role in mind? Send a message and I'll get back to you."
+        />
 
         <motion.div
           variants={staggerContainer}
           initial="hidden"
           whileInView="visible"
           viewport={viewportOnce}
-          className="grid gap-5 lg:grid-cols-5"
+          className="grid gap-8 lg:grid-cols-[0.8fr_1.2fr]"
         >
           {/* Contact details */}
-          <motion.div variants={fadeInUp} className="lg:col-span-2">
-            <Card className="h-full">
-              <CardTitle className="mb-5">Get in touch</CardTitle>
-              <ul className="space-y-5">
-                {details.map(({ Icon, label, value, href, external }) => (
-                  <li key={label} className="flex items-start gap-3">
-                    <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary">
-                      <Icon className="h-4 w-4" />
+          <motion.div variants={fadeInUp}>
+            <Card className="p-0">
+              <dl className="divide-y divide-border">
+                {details.map(({ icon: Icon, label, value, href, external }) => (
+                  <div key={label} className="flex gap-4 p-5">
+                    <span
+                      aria-hidden="true"
+                      className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-primary-soft text-primary"
+                    >
+                      <Icon className="h-[18px] w-[18px]" />
                     </span>
                     <div className="min-w-0">
-                      <p className="text-xs uppercase tracking-widest text-muted-foreground">
+                      <dt className="text-xs font-semibold uppercase tracking-[0.08em] text-muted-foreground">
                         {label}
-                      </p>
-                      {href ? (
-                        <a
-                          href={href}
-                          {...(external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
-                          className="break-words text-sm hover:text-primary"
-                        >
-                          {value}
-                        </a>
-                      ) : (
-                        <p className="break-words text-sm">{value}</p>
-                      )}
+                      </dt>
+                      <dd className="mt-1 break-words text-sm text-foreground">
+                        {href ? (
+                          <a
+                            href={href}
+                            {...(external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+                            className="rounded transition-colors hover:text-primary"
+                          >
+                            {value}
+                          </a>
+                        ) : (
+                          value
+                        )}
+                      </dd>
                     </div>
-                  </li>
+                  </div>
                 ))}
-              </ul>
+              </dl>
             </Card>
           </motion.div>
 
           {/* Form */}
-          <motion.div variants={fadeInUp} className="lg:col-span-3">
-            <Card>
-              <form onSubmit={onSubmit} noValidate className="space-y-4">
-                <div className="grid gap-4 sm:grid-cols-2">
+          <motion.div variants={fadeInUp}>
+            <Card className="p-6 sm:p-8">
+              <form onSubmit={onSubmit} noValidate className="space-y-5">
+                <div className="grid gap-5 sm:grid-cols-2">
                   {fields.slice(0, 2).map((field) => (
                     <Field
                       key={field.name}
@@ -169,8 +172,8 @@ export function Contact() {
                     aria-describedby={errors.message ? 'message-error' : undefined}
                     placeholder="Tell me about your project…"
                     className={cn(
-                      'w-full resize-y rounded-2xl border bg-background/50 px-4 py-3 text-sm outline-none transition-colors placeholder:text-muted-foreground/60 focus:border-primary/60 focus:ring-2 focus:ring-primary/20',
-                      errors.message ? 'border-destructive' : 'border-border'
+                      'w-full resize-y rounded-lg border bg-background px-3.5 py-2.5 text-sm shadow-sm outline-none transition-colors placeholder:text-muted-foreground/60 focus:border-primary focus:ring-2 focus:ring-primary/20',
+                      errors.message ? 'border-destructive' : 'border-input'
                     )}
                   />
                   {errors.message && (
@@ -180,20 +183,14 @@ export function Contact() {
                   )}
                 </div>
 
-                <Button
-                  type="submit"
-                  size="lg"
-                  disabled={status === 'submitting'}
-                  className="w-full sm:w-auto"
-                >
+                <Button type="submit" size="lg" disabled={status === 'submitting'} className="w-full">
                   {status === 'submitting' ? (
                     <>
-                      <Loader2 className="h-4 w-4 animate-spin" /> Sending…
+                      <Loader2 className="h-4 w-4 animate-spin" aria-hidden="true" /> Sending…
                     </>
                   ) : (
                     <>
-                      <Send className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />{' '}
-                      Send Message
+                      <Send className="h-4 w-4" aria-hidden="true" /> Send message
                     </>
                   )}
                 </Button>
@@ -206,16 +203,16 @@ export function Contact() {
                     role="status"
                     aria-live="polite"
                     className={cn(
-                      'flex items-center gap-2 rounded-xl border px-4 py-3 text-sm',
+                      'flex items-center gap-2 rounded-lg border p-3 text-sm',
                       status === 'success'
-                        ? 'border-primary/30 bg-primary/10 text-primary'
+                        ? 'border-success/30 bg-success/10 text-success'
                         : 'border-destructive/30 bg-destructive/10 text-destructive'
                     )}
                   >
                     {status === 'success' ? (
-                      <CheckCircle2 className="h-4 w-4 shrink-0" />
+                      <CheckCircle2 className="h-4 w-4 shrink-0" aria-hidden="true" />
                     ) : (
-                      <AlertCircle className="h-4 w-4 shrink-0" />
+                      <AlertCircle className="h-4 w-4 shrink-0" aria-hidden="true" />
                     )}
                     {feedback}
                   </motion.p>
@@ -266,8 +263,8 @@ function Field({
         aria-invalid={Boolean(error)}
         aria-describedby={error ? `${id}-error` : undefined}
         className={cn(
-          'w-full rounded-full border bg-background/50 px-4 py-2.5 text-sm outline-none transition-colors placeholder:text-muted-foreground/60 focus:border-primary/60 focus:ring-2 focus:ring-primary/20',
-          error ? 'border-destructive' : 'border-border'
+          'h-11 w-full rounded-lg border bg-background px-3.5 text-sm shadow-sm outline-none transition-colors placeholder:text-muted-foreground/60 focus:border-primary focus:ring-2 focus:ring-primary/20',
+          error ? 'border-destructive' : 'border-input'
         )}
       />
       {error && (

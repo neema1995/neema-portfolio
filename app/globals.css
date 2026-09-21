@@ -2,57 +2,70 @@
 @tailwind components;
 @tailwind utilities;
 
+/*
+ * Design tokens — a conventional professional palette: neutral slate surfaces,
+ * a single blue brand colour for actions and emphasis, hairline borders and
+ * soft elevation. Light is the default; the toggle swaps these variables.
+ *
+ * Every pair below is checked for WCAG AA (4.5:1) against its own surface.
+ */
 @layer base {
-  /* Light theme (opt-in via the toggle) */
   :root {
+    /* Surfaces */
     --background: 0 0% 100%;
-    --foreground: 233 29% 14%;
+    --foreground: 222 47% 11%;
     --card: 0 0% 100%;
-    --card-foreground: 233 29% 14%;
-    --primary: 259 84% 60%;
-    --primary-foreground: 0 0% 100%;
-    --secondary: 220 20% 96%;
-    --secondary-foreground: 233 29% 14%;
-    --muted: 220 20% 96%;
-    --muted-foreground: 240 8% 42%;
-    --accent: 190 90% 45%;
-    --accent-foreground: 0 0% 100%;
-    --destructive: 0 72% 51%;
-    --destructive-foreground: 0 0% 100%;
-    --border: 220 20% 89%;
-    --input: 220 20% 89%;
-    --ring: 259 84% 60%;
-    --radius: 1rem;
+    --card-foreground: 222 47% 11%;
+    --muted: 210 40% 96%;
+    --muted-foreground: 215 19% 42%;
+    --subtle: 210 40% 98%;
 
-    /* Gradient stops shared by text, borders and blobs */
-    --grad-1: 259 84% 63%;
-    --grad-2: 291 80% 64%;
-    --grad-3: 190 90% 52%;
+    /* Brand */
+    --primary: 221 83% 53%;
+    --primary-foreground: 0 0% 100%;
+    --primary-soft: 214 95% 93%;
+
+    /* Support */
+    --secondary: 210 40% 96%;
+    --secondary-foreground: 222 47% 11%;
+    --accent: 210 40% 96%;
+    --accent-foreground: 222 47% 11%;
+    --destructive: 0 72% 45%;
+    --destructive-foreground: 0 0% 100%;
+    --success: 142 71% 30%;
+
+    /* Lines & focus */
+    --border: 214 32% 91%;
+    --input: 214 32% 91%;
+    --ring: 221 83% 53%;
+
+    --radius: 0.75rem;
   }
 
-  /* Dark theme — the default for this site */
   .dark {
-    --background: 240 24% 6%;
-    --foreground: 220 30% 96%;
-    --card: 240 20% 9%;
-    --card-foreground: 220 30% 96%;
-    --primary: 259 90% 68%;
-    --primary-foreground: 240 24% 6%;
-    --secondary: 240 16% 14%;
-    --secondary-foreground: 220 30% 96%;
-    --muted: 240 16% 14%;
-    --muted-foreground: 232 14% 66%;
-    --accent: 190 95% 58%;
-    --accent-foreground: 240 24% 6%;
-    --destructive: 0 72% 58%;
-    --destructive-foreground: 0 0% 100%;
-    --border: 240 14% 20%;
-    --input: 240 14% 20%;
-    --ring: 259 90% 68%;
+    --background: 222 47% 7%;
+    --foreground: 210 40% 98%;
+    --card: 222 40% 11%;
+    --card-foreground: 210 40% 98%;
+    --muted: 217 33% 17%;
+    --muted-foreground: 215 20% 68%;
+    --subtle: 222 44% 9%;
 
-    --grad-1: 259 90% 70%;
-    --grad-2: 291 85% 70%;
-    --grad-3: 190 95% 60%;
+    --primary: 217 91% 60%;
+    --primary-foreground: 222 47% 11%;
+    --primary-soft: 217 60% 20%;
+
+    --secondary: 217 33% 17%;
+    --secondary-foreground: 210 40% 98%;
+    --accent: 217 33% 17%;
+    --accent-foreground: 210 40% 98%;
+    --destructive: 0 75% 65%;
+    --destructive-foreground: 222 47% 11%;
+    --success: 142 62% 62%;
+
+    --border: 217 25% 22%;
+    --input: 217 25% 22%;
+    --ring: 217 91% 60%;
   }
 
   * {
@@ -61,13 +74,22 @@
 
   html {
     scroll-behavior: smooth;
-    /* Keeps section headings clear of the floating navbar when jumping to an anchor */
+    /* Keeps section headings clear of the sticky header when jumping to an anchor */
     scroll-padding-top: 6rem;
   }
 
   body {
     @apply bg-background text-foreground antialiased;
-    font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
+    font-feature-settings: 'cv11', 'ss01';
+  }
+
+  ::selection {
+    @apply bg-primary/20;
+  }
+
+  /* One consistent focus ring for every interactive element. */
+  :focus-visible {
+    @apply outline-none ring-2 ring-ring ring-offset-2 ring-offset-background;
   }
 
   /* Respect users who ask for reduced motion: kill decorative loops. */
@@ -86,68 +108,65 @@
 }
 
 @layer components {
-  /* Animated gradient text used for the hero name and section accents. */
-  .gradient-text {
-    @apply bg-clip-text text-transparent;
-    background-image: linear-gradient(
-      100deg,
-      hsl(var(--grad-1)),
-      hsl(var(--grad-2)),
-      hsl(var(--grad-3)),
-      hsl(var(--grad-1))
-    );
-    background-size: 300% 100%;
-    @apply animate-gradient-pan;
+  /* Page shell — one container width for every section. */
+  .container-page {
+    @apply mx-auto w-full max-w-6xl px-6 lg:px-8;
   }
 
-  /* Frosted translucent surface — the glassmorphism base for every card. */
-  .glass {
-    @apply rounded-[var(--radius)] border border-white/10 bg-white/60 shadow-xl backdrop-blur-xl;
-  }
-  .dark .glass {
-    @apply border-white/10 bg-white/[0.04] shadow-2xl shadow-black/40;
+  /* Vertical rhythm shared by every section. */
+  .section {
+    @apply scroll-mt-24 py-20 md:py-28;
   }
 
-  /*
-   * Gradient border: a gradient-filled wrapper whose inner element paints the
-   * card background, leaving a 1px gradient rim. Cheaper than border-image and
-   * keeps the rounded corners crisp.
-   */
-  .gradient-border {
-    position: relative;
-    isolation: isolate;
+  /* Small uppercase label above a heading. */
+  .eyebrow {
+    @apply text-xs font-semibold uppercase tracking-[0.12em] text-primary;
   }
-  .gradient-border::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    border-radius: inherit;
-    padding: 1px;
-    background: linear-gradient(
-      135deg,
-      hsl(var(--grad-1) / 0.7),
-      hsl(var(--grad-3) / 0.35) 45%,
-      transparent 75%
-    );
-    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
-    -webkit-mask-composite: xor;
-    mask-composite: exclude;
-    pointer-events: none;
-    z-index: -1;
+
+  /* Section H2 scale. */
+  .heading-2 {
+    @apply text-3xl font-bold tracking-tight sm:text-4xl;
+  }
+
+  /* Supporting sentence under a heading or card title. */
+  .lead {
+    @apply text-base leading-relaxed text-muted-foreground sm:text-lg;
   }
 }
 
-/* Subtle custom scrollbar that matches the dark palette. */
+@layer utilities {
+  /*
+   * Faint dot grid behind the hero so the large light area reads as a
+   * deliberate surface rather than empty page. Fades out toward the bottom.
+   */
+  .bg-dots {
+    background-image: radial-gradient(hsl(var(--border)) 1px, transparent 1px);
+    background-size: 22px 22px;
+    -webkit-mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, #000 40%, transparent 100%);
+    mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, #000 40%, transparent 100%);
+  }
+
+  /* Soft brand-tinted glow anchored behind the headline. */
+  .hero-glow {
+    background: radial-gradient(
+      ellipse 60% 50% at 20% 0%,
+      hsl(var(--primary) / 0.1),
+      transparent 70%
+    );
+  }
+}
+
+/* Scrollbar tuned to the neutral palette. */
 ::-webkit-scrollbar {
   width: 10px;
 }
 ::-webkit-scrollbar-track {
-  background: hsl(var(--background));
+  background: hsl(var(--muted));
 }
 ::-webkit-scrollbar-thumb {
   background: hsl(var(--border));
   border-radius: 9999px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: hsl(var(--primary) / 0.6);
+  background: hsl(var(--muted-foreground));
 }
