@@ -11,6 +11,39 @@ export type SocialLink = {
   icon: 'linkedin' | 'mail' | 'phone'
 }
 
+const DEFAULT_SITE_URL = 'https://neema-sunder.vercel.app'
+
+/**
+ * Canonical site origin, used for metadataBase, the sitemap, robots.txt and
+ * the JSON-LD @ids.
+ *
+ * Reads as a list of candidates rather than `??` on purpose: a Vercel project
+ * variable that exists but is blank yields '', which `??` does NOT fall back
+ * on, so `new URL('')` in app/layout.tsx failed the build with
+ * ERR_INVALID_URL. Anything blank or unparseable is skipped, and `.origin`
+ * normalises the result so nothing downstream produces a double slash.
+ */
+function resolveSiteUrl(): string {
+  const candidates = [
+    process.env.NEXT_PUBLIC_SITE_URL,
+    // Vercel injects the deployment host with no scheme.
+    process.env.NEXT_PUBLIC_VERCEL_URL && `https://${process.env.NEXT_PUBLIC_VERCEL_URL}`,
+    DEFAULT_SITE_URL,
+  ]
+
+  for (const candidate of candidates) {
+    const value = candidate?.trim()
+    if (!value) continue
+    try {
+      return new URL(value).origin
+    } catch {
+      // Malformed value (e.g. a host with no scheme) — try the next candidate.
+    }
+  }
+
+  return DEFAULT_SITE_URL
+}
+
 export const personal = {
   name: 'Neema Sunder AV',
   /** Primary role, as printed on the resume */
@@ -41,7 +74,7 @@ export const personal = {
   resumeUrl: '/resume.pdf',
 
   /** Canonical site origin — override with NEXT_PUBLIC_SITE_URL in .env.local */
-  siteUrl: process.env.NEXT_PUBLIC_SITE_URL ?? 'https://neema-sunder.vercel.app',
+  siteUrl: resolveSiteUrl(),
 } as const
 
 export const socials: SocialLink[] = [

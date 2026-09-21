@@ -3,7 +3,9 @@
 import { motion } from 'framer-motion'
 import { Database, Layers, Sparkles, Wrench, type LucideIcon } from 'lucide-react'
 import { Card, CardTitle } from './card'
+import { cn } from '@/lib/utils'
 import { fadeInUp } from '@/lib/motion'
+import { levelLabel, levelSegments } from '@/lib/skill-usage'
 import type { SkillCategory } from '@/data/skills'
 
 /** Category icon lookup — keys match SkillCategory['icon']. */
@@ -14,25 +16,16 @@ const icons: Record<SkillCategory['icon'], LucideIcon> = {
   sparkles: Sparkles,
 }
 
-/**
- * Turns a 0-100 level into words, so the meter means something to a screen
- * reader (and to anyone who does not read a bar as a number).
- */
-function levelLabel(level: number): string {
-  if (level >= 90) return 'Expert'
-  if (level >= 80) return 'Advanced'
-  if (level >= 70) return 'Proficient'
-  return 'Working knowledge'
-}
+const SEGMENTS = [0, 1, 2, 3, 4]
 
-/** One skills category with a proficiency meter per skill. */
+/** One skills category, with a coarse 5-segment level per skill. */
 export function SkillCard({ category }: { category: SkillCategory }) {
   const Icon = icons[category.icon]
 
   return (
     <motion.li variants={fadeInUp}>
       {/*
-        No `h-full`: cards hug their content so a short category does not get
+        No `h-full`: cards hug their content so a short category is not
         stretched to match a long one, which left a large void inside it.
       */}
       <Card>
@@ -49,35 +42,40 @@ export function SkillCard({ category }: { category: SkillCategory }) {
           </span>
         </div>
 
-        <ul className="mt-5 space-y-4">
-          {category.skills.map((skill) => (
-            <li key={skill.name}>
-              <div className="mb-2 flex items-baseline justify-between gap-3 text-sm">
-                <span className="font-medium">{skill.name}</span>
-                <span className="shrink-0 text-xs text-muted-foreground">
-                  {levelLabel(skill.level)}
-                </span>
-              </div>
+        <ul className="mt-4 divide-y divide-border">
+          {category.skills.map((skill) => {
+            const filled = levelSegments(skill.level)
+            const label = levelLabel(skill.level)
+            return (
+              <li key={skill.name} className="flex items-center justify-between gap-4 py-2.5">
+                <span className="text-sm font-medium">{skill.name}</span>
 
-              <div
-                role="progressbar"
-                aria-label={`${skill.name} proficiency`}
-                aria-valuenow={skill.level}
-                aria-valuemin={0}
-                aria-valuemax={100}
-                aria-valuetext={`${levelLabel(skill.level)}, ${skill.level} percent`}
-                className="h-1.5 overflow-hidden rounded-full bg-muted"
-              >
-                <motion.div
-                  initial={{ width: 0 }}
-                  whileInView={{ width: `${skill.level}%` }}
-                  viewport={{ once: true, amount: 0.6 }}
-                  transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
-                  className="h-full rounded-full bg-primary"
-                />
-              </div>
-            </li>
-          ))}
+                <span className="flex shrink-0 items-center gap-3">
+                  <span className="hidden text-xs text-muted-foreground sm:inline">{label}</span>
+                  {/*
+                    Segments rather than a percentage bar: the underlying numbers
+                    are estimates, so coarse buckets are the honest presentation.
+                  */}
+                  <span
+                    role="img"
+                    aria-label={`${skill.name}: ${label}`}
+                    className="flex gap-1"
+                  >
+                    {SEGMENTS.map((i) => (
+                      <span
+                        key={i}
+                        aria-hidden="true"
+                        className={cn(
+                          'h-1.5 w-4 rounded-full transition-colors',
+                          i < filled ? 'bg-primary' : 'bg-muted'
+                        )}
+                      />
+                    ))}
+                  </span>
+                </span>
+              </li>
+            )
+          })}
         </ul>
       </Card>
     </motion.li>
