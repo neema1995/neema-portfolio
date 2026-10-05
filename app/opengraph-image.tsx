@@ -26,12 +26,12 @@ export default function OpenGraphImage() {
           fontFamily: 'sans-serif',
         }}
       >
-        {/* Brand bar, matching the blue primary token. */}
-        <div style={{ display: 'flex', width: 96, height: 8, background: '#2563eb', borderRadius: 4 }} />
+        {/* Brand bar, matching the teal primary token. */}
+        <div style={{ display: 'flex', width: 96, height: 8, background: '#0f766e', borderRadius: 4 }} />
         <div style={{ fontSize: 96, fontWeight: 700, marginTop: 32, lineHeight: 1.05, letterSpacing: -3 }}>
           {personal.name}
         </div>
-        <div style={{ fontSize: 40, marginTop: 16, color: '#2563eb', fontWeight: 600 }}>
+        <div style={{ fontSize: 40, marginTop: 16, color: '#0f766e', fontWeight: 600 }}>
           {personal.role}
         </div>
         <div style={{ fontSize: 28, marginTop: 28, color: '#334155' }}>

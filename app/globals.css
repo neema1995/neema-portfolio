@@ -4,7 +4,7 @@
 
 /*
  * Design tokens — a conventional professional palette: neutral slate surfaces,
- * a single blue brand colour for actions and emphasis, hairline borders and
+ * a single deep-teal brand colour for actions and emphasis, hairline borders and
  * soft elevation. Light is the default; the toggle swaps these variables.
  *
  * Every pair below is checked for WCAG AA (4.5:1) against its own surface.
@@ -21,9 +21,9 @@
     --subtle: 210 40% 98%;
 
     /* Brand */
-    --primary: 221 83% 53%;
+    --primary: 175 77% 26%;
     --primary-foreground: 0 0% 100%;
-    --primary-soft: 214 95% 93%;
+    --primary-soft: 167 85% 89%;
 
     /* Support */
     --secondary: 210 40% 96%;
@@ -37,7 +37,7 @@
     /* Lines & focus */
     --border: 214 32% 91%;
     --input: 214 32% 91%;
-    --ring: 221 83% 53%;
+    --ring: 175 77% 26%;
 
     --radius: 0.75rem;
   }
@@ -51,9 +51,9 @@
     --muted-foreground: 215 20% 68%;
     --subtle: 222 44% 9%;
 
-    --primary: 217 91% 60%;
+    --primary: 172 66% 50%;
     --primary-foreground: 222 47% 11%;
-    --primary-soft: 217 60% 20%;
+    --primary-soft: 176 61% 19%;
 
     --secondary: 217 33% 17%;
     --secondary-foreground: 210 40% 98%;
@@ -65,7 +65,7 @@
 
     --border: 217 25% 22%;
     --input: 217 25% 22%;
-    --ring: 217 91% 60%;
+    --ring: 172 66% 50%;
   }
 
   * {
