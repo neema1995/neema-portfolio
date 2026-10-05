@@ -1,5 +1,4 @@
 import { About } from '@/components/sections/About'
-import { Achievements } from '@/components/sections/Achievements'
 import { Contact } from '@/components/sections/Contact'
 import { Education } from '@/components/sections/Education'
 import { Experience } from '@/components/sections/Experience'
@@ -9,6 +8,7 @@ import { Marquee } from '@/components/sections/Marquee'
 import { Projects } from '@/components/sections/Projects'
 import { Skills } from '@/components/sections/Skills'
 import { BackToTop } from '@/components/shared/BackToTop'
+import { ChatWidget } from '@/components/shared/ChatWidget'
 import { NavBar } from '@/components/ui/NavBar'
 
 /*
@@ -30,13 +30,13 @@ export default function HomePage() {
         <Skills />
         <Experience />
         <Projects />
-        <Achievements />
         <Education />
         <Contact />
       </main>
 
       <Footer />
       <BackToTop />
+      <ChatWidget />
     </>
   )
 }

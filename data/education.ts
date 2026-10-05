@@ -28,15 +28,3 @@ export const education: Education[] = [
     year: null,
   },
 ]
-
-/**
- * TODO: Add certifications from resume — the source resume lists none.
- * Shape kept ready so entries can be dropped in without touching components.
- */
-export type Certification = {
-  name: string
-  issuer: string
-  year: string
-}
-
-export const certifications: Certification[] = []

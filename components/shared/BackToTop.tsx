@@ -25,7 +25,8 @@ export function BackToTop() {
           initial={{ opacity: 0, scale: 0.9, y: 8 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0.9, y: 8 }}
-          className="fixed bottom-6 right-6 z-40 flex h-11 w-11 items-center justify-center rounded-full bg-primary text-primary-foreground shadow-card-hover transition-colors hover:bg-primary/90"
+          // Sits above the chat launcher, horizontally centred on it.
+          className="fixed bottom-24 right-[30px] z-40 flex h-11 w-11 items-center justify-center rounded-full border border-border bg-card text-muted-foreground shadow-card transition-colors hover:border-primary/40 hover:text-primary"
         >
           <ArrowUp className="h-5 w-5" />
         </motion.button>
