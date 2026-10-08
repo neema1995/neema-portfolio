@@ -20,7 +20,7 @@ const dmSans = DM_Sans({
 const title = `${personal.name} — ${personal.role} | ${personal.location}`
 /* Meta description: 157 characters, mirroring the hero's positioning. */
 const description =
-  'Backend-focused Software Engineer in Calicut, Kerala. Laravel, PHP, MySQL and Vue.js — REST APIs, query optimisation, Redis caching and queue-driven systems.'
+  'Backend Engineer in Calicut, Kerala building multi-tenant SaaS for 500+ organizations. Laravel, PHP, MySQL, Redis — REST APIs, queue processing and caching.'
 
 /*
  * The resume's LinkedIn URL is truncated (".../in/ne"), and a dead `sameAs`
@@ -28,7 +28,10 @@ const description =
  * handle looks real. See the TODO in data/personal.ts.
  */
 const linkedInHandle = personal.linkedin.split('/in/')[1] ?? ''
-const sameAs = linkedInHandle.length > 4 ? [personal.linkedin] : []
+const sameAs = [
+  personal.github,
+  ...(linkedInHandle.length > 4 ? [personal.linkedin] : []),
+]
 
 export const metadata: Metadata = {
   metadataBase: new URL(personal.siteUrl),

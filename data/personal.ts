@@ -8,10 +8,10 @@ export type SocialLink = {
   label: string
   href: string
   /** Key used to pick the icon in components/sections/Footer.tsx */
-  icon: 'linkedin' | 'mail' | 'phone'
+  icon: 'linkedin' | 'github' | 'mail' | 'phone'
 }
 
-const DEFAULT_SITE_URL = 'https://neema-sunder.vercel.app'
+const DEFAULT_SITE_URL = 'https://neema-portfolio-rbef-mauve.vercel.app'
 
 /**
  * Canonical site origin, used for metadataBase, the sitemap, robots.txt and
@@ -46,10 +46,10 @@ function resolveSiteUrl(): string {
 
 export const personal = {
   name: 'Neema Sunder AV',
-  /** Primary role, as printed on the resume */
-  role: 'Software Engineer',
-  /** Rotating titles for the hero typewriter — all derived from the resume */
-  roles: ['Software Engineer', 'Backend Engineer'],
+  /** Primary role, as printed on the resume headline */
+  role: 'Backend Engineer',
+  /** Rotating titles for the hero typewriter — both appear on the resume */
+  roles: ['Backend Engineer', 'Software Engineer'],
   dateOfBirth: '18 / 11 / 1995',
   email: 'nsav1995@gmail.com',
   phone: '+91 9497051348',
@@ -58,17 +58,19 @@ export const personal = {
   /** Short form used in the hero and SEO title */
   location: 'Calicut, Kerala, India',
   /**
-   * NOTE: the resume lists this LinkedIn URL in truncated form.
+   * NOTE: the resume STILL lists this LinkedIn URL in truncated form, so it is
+   * a dead link. app/layout.tsx drops it from the JSON-LD `sameAs` until the
+   * handle looks real, and lib/assistant-context.ts withholds it from the
+   * assistant for the same reason.
    * TODO: replace with the full LinkedIn profile URL.
    */
   linkedin: 'https://www.linkedin.com/in/ne',
 
-  // TODO: Add GitHub profile — no GitHub username is present in the resume.
-  // (The GitHub Stats section was intentionally omitted for this reason.)
+  github: 'https://github.com/neema1995',
 
-  /** Career Objective, quoted from the resume */
+  /** Professional Summary, quoted from the resume */
   objective:
-    'Experienced Laravel developer with expertise in building scalable web applications using Laravel, PHP, MySQL and Vue.js. Strong expertise in RESTful APIs, database design and performance optimization. Passionate about writing clean, maintainable code and improving application efficiency.',
+    'Backend engineer building a multi-tenant SaaS platform used by 500+ organizations. Cut report generation time by 60% with MySQL optimization and Redis caching. Builds REST APIs and AI API integrations with PHP, Laravel, MySQL, Vue.js and Redis. Working knowledge of AWS (EC2, RDS, S3).',
 
   /** Path to the downloadable CV. TODO: drop the real PDF at public/resume.pdf */
   resumeUrl: '/resume.pdf',
@@ -78,10 +80,10 @@ export const personal = {
 } as const
 
 export const socials: SocialLink[] = [
+  { label: 'GitHub', href: personal.github, icon: 'github' },
   { label: 'LinkedIn', href: personal.linkedin, icon: 'linkedin' },
   { label: 'Email', href: `mailto:${personal.email}`, icon: 'mail' },
   { label: 'Phone', href: `tel:${personal.phone.replace(/\s/g, '')}`, icon: 'phone' },
-  // TODO: Add GitHub link once a username is available.
 ]
 
 /**
@@ -89,11 +91,11 @@ export const socials: SocialLink[] = [
  * can scan them instead of parsing a long sentence.
  */
 export const specialities: string[] = [
-  'Advanced Eloquent modelling',
-  'Complex query optimisation',
-  'Redis caching strategies',
-  'Queue-driven processing',
-  'Domain-driven structure',
+  'Multi-tenant SaaS',
+  'MySQL query optimisation',
+  'Redis caching',
+  'Queue jobs & batches',
+  'Payment integrations',
 ]
 
 /**
@@ -105,27 +107,27 @@ export type FocusArea = {
   title: string
   description: string
   /** Lucide icon name resolved in components/sections/Hero.tsx */
-  icon: 'api' | 'report' | 'layers'
+  icon: 'saas' | 'speed' | 'api'
 }
 
 export const focusAreas: FocusArea[] = [
   {
-    title: 'REST APIs',
+    title: 'Multi-tenant SaaS',
     description:
-      'Laravel APIs that back iOS and Android apps — versioned endpoints, predictable payloads.',
+      'Built and scaled Desklog, a multi-tenant platform now used by 500+ organizations.',
+    icon: 'saas',
+  },
+  {
+    title: 'Performance',
+    description:
+      'Cut report generation time by 60% through MySQL query optimisation and Redis caching.',
+    icon: 'speed',
+  },
+  {
+    title: 'APIs & integrations',
+    description:
+      'Laravel REST APIs for iOS and Android, plus Stripe, Razorpay, webhooks and SSO.',
     icon: 'api',
-  },
-  {
-    title: 'Automated reporting',
-    description:
-      'Cron-driven productivity reports that mail performance summaries and activity logs to admins.',
-    icon: 'report',
-  },
-  {
-    title: 'Service layers',
-    description:
-      'Reusable service classes for users, tasks and time tracking that cut duplication across the codebase.',
-    icon: 'layers',
   },
 ]
 

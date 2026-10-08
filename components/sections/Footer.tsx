@@ -1,8 +1,9 @@
-import { Linkedin, Mail, Phone, type LucideIcon } from 'lucide-react'
+import { Github, Linkedin, Mail, Phone, type LucideIcon } from 'lucide-react'
 import { navLinks, personal, socials } from '@/data/personal'
 
 /** Social icon lookup — keys match SocialLink['icon']. */
 const icons: Record<string, LucideIcon> = {
+  github: Github,
   linkedin: Linkedin,
   mail: Mail,
   phone: Phone,
@@ -32,8 +33,8 @@ export function Footer() {
               {personal.name}
             </p>
             <p className="mt-4 text-sm leading-relaxed text-muted-foreground">
-              {personal.role} in {personal.location}, building scalable web applications with
-              Laravel, PHP, MySQL and Vue.js.
+              {personal.role} in {personal.location}, building multi-tenant SaaS with Laravel,
+              PHP, MySQL and Redis.
             </p>
 
             {/* Social icon row */}

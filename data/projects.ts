@@ -1,19 +1,17 @@
 /**
  * Projects, transcribed from the resume.
  *
- * The resume lists a name and description only — no tech stack, no repository
- * and no live URL. Tech tags below are limited to technologies the resume
- * attributes to this developer's work; links are left null on purpose.
+ * The resume lists a name, description and tech stack — no repository and no
+ * live URL — so links stay null and the cards render without a link row.
  *
  * TODO: Add live demo and source links for each project.
- * TODO: Confirm the per-project tech stack (not specified on the resume).
  */
 
 export type Project = {
   name: string
   description: string
   tech: string[]
-  /** null = no link on the resume; the card renders the button disabled. */
+  /** null = no link on the resume; the card omits the link row. */
   liveUrl: string | null
   sourceUrl: string | null
 }
@@ -22,23 +20,26 @@ export const projects: Project[] = [
   {
     name: 'Desklog',
     description:
-      'An automated productivity tracking software for monitoring employee online, idle, and offline time. Allows users to create projects and tasks, and generate detailed reports and analytics.',
-    tech: ['Laravel', 'PHP', 'MySQL', 'Vue.js', 'Redis'],
+      'Employee time tracker with projects, tasks and reports. Built its backend APIs, queues, payments and caching.',
+    tech: [
+      'PHP',
+      'Laravel',
+      'MySQL',
+      'Redis',
+      'Laravel Queues',
+      'REST APIs',
+      'Stripe',
+      'Razorpay',
+    ],
     liveUrl: null,
     sourceUrl: null,
   },
   {
     name: 'Rupbee',
     description:
-      'A banking cloud solution for NBFCs that processes banking transactions across various branches.',
-    tech: ['Laravel', 'PHP', 'MySQL', 'REST APIs'],
-    liveUrl: null,
-    sourceUrl: null,
-  },
-  {
-    name: 'ERP',
-    description: 'Enterprise Resource Planning system.',
-    tech: ['Laravel', 'PHP', 'MySQL'],
+      'Banking cloud solution for NBFCs that processes transactions across branches.',
+    // The resume types this as "Veu.js"; corrected to the real framework name.
+    tech: ['PHP', 'Laravel', 'MySQL', 'Vue.js'],
     liveUrl: null,
     sourceUrl: null,
   },

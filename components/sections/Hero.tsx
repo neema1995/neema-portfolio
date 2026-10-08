@@ -3,11 +3,12 @@
 import { motion } from 'framer-motion'
 import {
   ArrowRight,
+  Building2,
   Download,
-  Layers,
+  Gauge,
+  Github,
   Linkedin,
   Mail,
-  MailCheck,
   MapPin,
   Phone,
   Plug,
@@ -18,27 +19,26 @@ import { buttonVariants } from '@/components/ui/button'
 import { yearsOfExperience } from '@/data/achievements'
 import { experiences } from '@/data/experience'
 import { focusAreas, personal, socials, specialities } from '@/data/personal'
-import { skillTags } from '@/data/skills'
-import { projects } from '@/data/projects'
 import { cn } from '@/lib/utils'
 import { fadeInUp, staggerContainer } from '@/lib/motion'
 
-/** Headline figures repeated from the resume — no invented metrics. */
+/** Headline figures quoted from the resume — no invented metrics. */
 const stats = [
   { value: `${yearsOfExperience()}+`, label: 'Years experience' },
-  { value: `${projects.length}`, label: 'Major projects' },
-  { value: `${skillTags.length}+`, label: 'Technologies' },
+  { value: '500+', label: 'Organizations served' },
+  { value: '60%', label: 'Faster reporting' },
 ]
 
 /** Focus-area icon lookup — keys match FocusArea['icon']. */
 const focusIcons: Record<string, LucideIcon> = {
+  saas: Building2,
+  speed: Gauge,
   api: Plug,
-  report: MailCheck,
-  layers: Layers,
 }
 
 /** Social icon lookup — keys match SocialLink['icon']. */
 const socialIcons: Record<string, LucideIcon> = {
+  github: Github,
   linkedin: Linkedin,
   mail: Mail,
   phone: Phone,

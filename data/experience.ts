@@ -21,23 +21,47 @@ export const experiences: Experience[] = [
     period: '2023 – Present',
     location: 'Gov. Cyber Park (Sahya Building), Calicut, Kerala',
     bullets: [
-      'Designed and developed RESTful APIs to support mobile applications (iOS / Android) in Laravel.',
-      'Created an automated productivity email report system using cron jobs, sending detailed performance summaries and activity logs to admins at regular intervals (daily / weekly / monthly).',
-      'Implemented task request system and time request system.',
-      'Created service classes for user management, project task handling, and time tracking — reducing code duplication and improving application performance.',
+      'Built and scaled Desklog, a multi-tenant SaaS platform used by 500+ organizations.',
+      'Cut report generation time by 60% through MySQL query optimization and Redis caching.',
+      'Designed REST APIs in Laravel for the iOS and Android mobile apps.',
+      'Moved bulk tasks and report generation to background queue jobs and batches (Laravel Bus).',
+      'Automated daily, weekly, and monthly email reports to admins using cron jobs.',
+      'Integrated Razorpay and Stripe for online payments and subscriptions.',
+      'Implemented webhooks, SSO login, and the task and time request systems.',
+      'Wrote service classes for users, tasks, and time tracking to reduce duplicate code.',
+      /*
+       * TODO: the resume has a ninth bullet here that is still an unfilled
+       * placeholder — "Integrated AI APIs to [PLACEHOLDER: describe the AI
+       * feature and its result]". It is omitted rather than guessed at.
+       * Fill in the real feature and outcome, then add it back as:
+       *   'Integrated AI APIs to <what it does>, <measurable result>.',
+       * and add 'AI APIs' to the tech list below.
+       */
     ],
-    tech: ['Laravel', 'PHP', 'REST APIs', 'MySQL', 'Cron Jobs'],
+    tech: [
+      'Laravel',
+      'PHP',
+      'MySQL',
+      'Redis',
+      'REST APIs',
+      'Laravel Queues',
+      'Stripe',
+      'Razorpay',
+      'Webhooks',
+      'SSO',
+    ],
   },
   {
     company: 'Cybooz IT Solutions',
     role: 'Web Developer',
-    period: '2022 – 2023 · 1y 9m',
+    period: '2022 – 2023',
     // TODO: Add location — not stated on the resume for this employer.
     bullets: [
-      'Developed and maintained scalable web applications using Laravel and PHP.',
-      'Collaborated with frontend developers to implement responsive user interfaces using Vue.js and Tailwind CSS.',
-      'Optimized database queries to improve application performance.',
+      'Built and maintained web applications with Laravel and PHP.',
+      'Optimized MySQL queries to improve application performance.',
+      'Integrated an SMS system into client applications.',
+      'Built responsive interfaces with frontend developers using Vue.js and Tailwind CSS.',
     ],
-    tech: ['Laravel', 'PHP', 'Vue.js', 'Tailwind CSS', 'MySQL'],
+    tech: ['Laravel', 'PHP', 'MySQL', 'Vue.js', 'Tailwind CSS', 'SMS Gateway'],
   },
 ]

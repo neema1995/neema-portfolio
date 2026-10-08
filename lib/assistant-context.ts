@@ -85,7 +85,7 @@ ${education.map((e) => `- ${e.degree}, ${e.institution}${e.year ? ` (${e.year})`
 Email: ${personal.email}
 Phone: ${personal.phone}
 ${linkedin ? `LinkedIn: ${linkedin}` : 'LinkedIn: not published on the site — share the email instead.'}
-GitHub: not published on the site.`)
+GitHub: ${personal.github}`)
 
   sections.push(`## HOW TO BEHAVE
 1. Answer ONLY from the information above. It is the complete record of my work.

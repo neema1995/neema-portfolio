@@ -1,7 +1,15 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { Database, Layers, Sparkles, Wrench, type LucideIcon } from 'lucide-react'
+import {
+  Blocks,
+  Cloud,
+  Code2,
+  Database,
+  Layers,
+  Plug,
+  type LucideIcon,
+} from 'lucide-react'
 import { Card, CardTitle } from './card'
 import { cn } from '@/lib/utils'
 import { fadeInUp } from '@/lib/motion'
@@ -10,10 +18,12 @@ import type { SkillCategory } from '@/data/skills'
 
 /** Category icon lookup — keys match SkillCategory['icon']. */
 const icons: Record<SkillCategory['icon'], LucideIcon> = {
+  code: Code2,
   layers: Layers,
   database: Database,
-  wrench: Wrench,
-  sparkles: Sparkles,
+  cloud: Cloud,
+  architecture: Blocks,
+  integrations: Plug,
 }
 
 const SEGMENTS = [0, 1, 2, 3, 4]

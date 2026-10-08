@@ -1,7 +1,17 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { AlertCircle, CheckCircle2, Linkedin, Loader2, Mail, MapPin, Phone, Send } from 'lucide-react'
+import {
+  AlertCircle,
+  CheckCircle2,
+  Github,
+  Linkedin,
+  Loader2,
+  Mail,
+  MapPin,
+  Phone,
+  Send,
+} from 'lucide-react'
 import { useState, type FormEvent } from 'react'
 import { SectionHeading } from '@/components/shared/SectionHeading'
 import { Button } from '@/components/ui/button'
@@ -78,6 +88,7 @@ export function Contact() {
   const details = [
     { icon: Mail, label: 'Email', value: personal.email, href: `mailto:${personal.email}`, external: false },
     { icon: Phone, label: 'Phone', value: personal.phone, href: `tel:${personal.phone.replace(/\s/g, '')}`, external: false },
+    { icon: Github, label: 'GitHub', value: 'neema1995', href: personal.github, external: true },
     { icon: Linkedin, label: 'LinkedIn', value: 'View profile', href: personal.linkedin, external: true },
     { icon: MapPin, label: 'Location', value: personal.address, href: null, external: false },
   ]

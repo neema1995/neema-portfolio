@@ -46,9 +46,10 @@ export function About() {
               <span className="font-medium text-foreground">
                 Infinite Open-Source Solutions LLP
               </span>{' '}
-              in Calicut, where I build RESTful APIs for iOS and Android applications, automated
-              reporting systems, and reusable service layers that cut duplication across the
-              codebase.
+              in Calicut, where I build and scale Desklog — a multi-tenant SaaS platform used
+              by 500+ organizations. Day to day that means Laravel REST APIs for the mobile
+              apps, queue jobs and batches for the heavy work, Redis caching, and payment
+              integrations with Stripe and Razorpay.
             </p>
 
             <div className="pt-2">
