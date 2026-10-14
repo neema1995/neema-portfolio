@@ -55,7 +55,7 @@ export function About() {
             <div className="pt-2">
               <a
                 href={personal.resumeUrl}
-                download
+                download={personal.resumeFileName}
                 className={cn(buttonVariants({ variant: 'outline' }))}
               >
                 <Download className="h-4 w-4" aria-hidden="true" />

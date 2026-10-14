@@ -72,8 +72,17 @@ export const personal = {
   objective:
     'Backend engineer building a multi-tenant SaaS platform used by 500+ organizations. Cut report generation time by 60% with MySQL optimization and Redis caching. Builds REST APIs and AI API integrations with PHP, Laravel, MySQL, Vue.js and Redis. Working knowledge of AWS (EC2, RDS, S3).',
 
-  /** Path to the downloadable CV. TODO: drop the real PDF at public/resume.pdf */
+  /** Path the CV is served from (public/resume.pdf). */
   resumeUrl: '/resume.pdf',
+
+  /**
+   * Filename the visitor's browser saves it as, via the `download` attribute.
+   * Kept separate from resumeUrl so the URL stays tidy while the saved file is
+   * identifiable in a downloads folder full of other people's "resume.pdf".
+   * Note: `download` is only honoured for same-origin URLs — if the CV ever
+   * moves to Drive or S3, the browser will ignore this and use the remote name.
+   */
+  resumeFileName: 'Neema-Backend-Engineer.pdf',
 
   /** Canonical site origin — override with NEXT_PUBLIC_SITE_URL in .env.local */
   siteUrl: resolveSiteUrl(),

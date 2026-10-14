@@ -15,6 +15,7 @@ import {
   type LucideIcon,
 } from 'lucide-react'
 import { Typewriter } from '@/components/shared/AnimatedText'
+import { Portrait } from '@/components/shared/Portrait'
 import { buttonVariants } from '@/components/ui/button'
 import { yearsOfExperience } from '@/data/achievements'
 import { experiences } from '@/data/experience'
@@ -144,7 +145,7 @@ export function Hero() {
               </a>
               <a
                 href={personal.resumeUrl}
-                download
+                download={personal.resumeFileName}
                 className={cn(buttonVariants({ variant: 'outline', size: 'lg' }))}
               >
                 <Download className="h-4 w-4" aria-hidden="true" />
@@ -187,17 +188,7 @@ export function Hero() {
           {/* Portrait */}
           <motion.div variants={fadeInUp} className="mx-auto w-full max-w-sm lg:max-w-none">
             <div className="relative">
-              <div
-                role="img"
-                aria-label={`Portrait placeholder for ${personal.name}`}
-                className="relative flex aspect-[4/5] items-center justify-center overflow-hidden rounded-2xl border border-border bg-gradient-to-br from-primary-soft via-muted to-background shadow-card"
-              >
-                <span className="text-8xl font-bold tracking-tight text-primary/25">NS</span>
-                {/*
-                  TODO: Replace the placeholder above with next/image:
-                  <Image src="/images/profile.jpg" alt="Neema Sunder AV" fill className="object-cover" priority />
-                */}
-              </div>
+              <Portrait />
 
               {/* Tenure card, overlapping the portrait's lower edge. */}
               <div className="absolute -bottom-5 left-5 right-5 rounded-xl border border-border bg-card p-4 shadow-card-hover">
